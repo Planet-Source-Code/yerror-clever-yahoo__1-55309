@@ -1,0 +1,120 @@
+Attribute VB_Name = "Packets"
+'Packets made by Y-Error
+'(C)Copyright 2004 Yah-Masters.com
+'For Questions email me at: xxxxxx_anonymous_xxxxxx@yahoo.com
+'-------------------------------------------------------------
+Public Function YPager(whoto As String) As String
+Packet = "7¿Ä" & whoto & "¿Ä10¿Ä0¿Ä11¿Ä7D65DAC2¿Ä17¿Ä0¿Ä13¿Ä0¿Ä"
+YPager = Header("02", Packet)
+Debug.Print YPager
+End Function
+Public Function AddMyFriend(from As String, whoto As String, Group As String, message As String) As String
+Dim Packet As String
+Packet = "1¿Ä" & from & "¿Ä7¿Ä" & whoto & "¿Ä14¿Ä¿Ä65¿Ä" & Group & "s¿Ä97¿Ä1¿Ä216¿Ä¿Ä"
+AddMyFriend = Header("D0", Packet)
+End Function
+Public Function DeleteFriend(from As String, FriendToDelete As String, Group As String) As String
+Dim Packet As String
+Packet = "1¿Ä" & from & "¿Ä7¿Ä" & FriendToDelete & "¿Ä65¿Ä" & Group & "¿Ä"
+DeleteFriend = Header("84", Packet)
+End Function
+Public Function ConfInvite(from As String, whoto As String, message As String, confrence As String) As String
+Dim Packet As String
+Packet = "1¿Ä" & from & "¿Ä50¿Ä" & from & "¿Ä57¿Ä" & from & "¿Ä57¿Ä" & from & "¿Ä57¿Ä" & from & "¿Ä57¿Ä" & from & "¿Ä57¿Ä" & from & "¿Ä57¿Ä" & from & "¿Ä57¿Ä" & from & "¿Ä57¿Ä" & from & confrence & "¿Ä58¿Ä                                                              " _
+& message & "¿Ä97¿Ä1¿Ä52¿Ä" & whoto & "¿Ä13¿Ä256¿Ä"
+ConfInvite = Header("18", Packet)
+End Function
+Public Function VoiceInvite(from As String, whoto As String) As String
+Dim Packet As String
+Packet = "1¿Ä" & from & "¿Ä5¿Ä" & whoto & "¿Ä57" & "¿Ä¿Ä13¿Ä1¿Ä"
+VoiceInvite = Header("4A", Packet)
+End Function
+Public Function SendPM(from As String, whoto As String, message As String) As String
+Dim Packet As String
+Packet = "1¿Ä" & from & "¿Ä5¿Ä" & whoto & "¿Ä14¿Ä" & message & "¿Ä97¿Ä1" _
+& "¿Ä63¿Ä;0¿Ä64¿Ä0¿Ä1002¿Ä1¿Ä206¿Ä0¿Ä15¿Ä1086903880¿Ä11¿Ä-1820828541¿Ä"
+SendPM = Header("06", Packet)
+End Function
+Public Function Status(message As String, busy As Boolean) As String
+Dim Packet As String
+If busy = True Then
+Packet = "10¿Ä99¿Ä19¿Ä" & message & "¿Ä47¿Ä1¿Ä187¿Ä0¿Ä"
+Else
+Packet = "10¿Ä99¿Ä19¿Ä" & message & "¿Ä47¿Ä0¿Ä187¿Ä0¿Ä"
+End If
+Status = Header("C6", Packet)
+End Function
+Public Function SendFile(from As String, whoto As String, file As String) As String
+Dim Packet As String
+Packet = "5¿Ä" & whoto & "¿Ä49¿ÄFILEXFER¿Ä1¿Ä" & from & "¿Ä13¿Ä1¿Ä27¿Ä" & file & "¿Ä28¿Ä485¿Ä20¿Ä"
+SendFile = Header("4D", Packet)
+End Function
+Public Function Deny(from As String, whoto As String, message As String) As String
+Dim Packet As String
+Packet = "1¿Ä" & from & "¿Ä7¿Ä" & whoto & "¿Ä14¿Ä" & message & "¿Ä"
+Deny = Header("86", Packet)
+End Function
+Public Function JoinRoom(user As String) As String
+'######## Note: this will make the Room Ready
+Dim Packet As String
+Packet = "109¿Ä" & user & "¿Ä1¿Ä" & user & "¿Ä6¿" & "Äabcde¿Ä98¿Äus¿Ä" _
+& "135¿Äym6,0,0,1643¿Ä"
+JoinRoom = Header("96", Packet)
+End Function
+Public Function GotoRoom(user As String, room As String) As String
+'######## Note this will Join the Room
+Dim Packet As String
+Packet = "1¿Ä" & user & "¿Ä104¿Ä" & room & "¿Ä12" & "9¿Ä1600326535¿Ä6" _
+& "2¿Ä2¿Ä"
+GotoRoom = Header("98", Packet)
+End Function
+Public Function LeaveRoom(user As String, room As String) As String
+Dim Packet As String
+Packet = "1¿Ä" & user & "¿Ä1005¿Ä322" & "85272¿Ä"
+LeaveRoom = Header("A0", Packet)
+End Function
+Public Function ChatText(user As String, room As String, message As String) As String
+Dim Packet As String
+Packet = "1¿Ä" & user & "¿Ä104¿Ä" & room & "¿Ä117¿Ä" _
+& message & "¿Ä124¿Ä1¿Ä"
+ChatText = Header("A8", Packet)
+End Function
+Public Function CamStatus(Status As String) As String
+Dim Packet As String
+Packet = "10¿Ä99¿Ä19¿Ä" & Status & "¿Ä184¿Ä" & "YSTATUS=1¿Ä47" _
+& "¿Ä0¿Ä187¿Ä1¿Ä"
+CamStatus = Header("C6", Packet)
+End Function
+Public Function Unknown(user As String) As String
+'I dont know this Packet i sniffed some
+'Packets and saw this i dont know what it does
+'But im added it here
+Dim Packet As String
+Packet = "1¿Ä" & user & "¿Ä212¿Ä1¿Ä192¿Ä-650782246¿Ä"
+Unkown = Header("BD", Packet)
+End Function
+Public Function Boot(from As String, whoto As String) As String
+Dim Packet As String
+Dim Packet2 As String
+Packet = "1¿Ä" & from & "¿Ä5¿Ä" & whoto & "¿Ä212¿Ä1¿Ä192¿Ä-650782246¿Ä"
+Packet2 = "1¿Ä" & from & "¿Ä5¿Ä" & whoto & "¿Ä212¿Ä1¿Ä192¿Ä-650782246¿Ä"
+Boot = Header("BD", Packet) & Header("BD", Packet)
+End Function
+Public Function Invisible() As String
+'This will make you Invisible
+Dim Packet As String
+Packet = "13¿Ä2¿Ä"
+Invisible = Header("C5", Packet)
+End Function
+Public Function Audibles(from As String, whoto As String, audible As String) As String
+Dim Packet As String
+If audible = "nosepick" Then audible = "hello.nosepick1"
+If audible = "dude" Then audible = "hello.dude"
+If audible = "seeyou" Then audible = "hello.seeyou"
+If audible = "toothy" Then audible = "htf.toothy"
+Packet = "1¿Ä" & from & "¿Ä5¿Ä" & whoto & "¿Ä230¿Ä" & "base.us." & audible _
+& "1¿Ä231¿Ä" & "Yo!" & "¿Ä232¿Ä0d29376f051ad14fb85f2fc9ff8b03b31" _
+& "06d4689¿Ä"
+Audibles = Header("D0", Packet)
+End Function
+
